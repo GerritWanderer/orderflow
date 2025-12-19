@@ -36,6 +36,7 @@ export class ShopifyController {
   private buildOrder(order: OrderDto, salesChannel: string): Order {
     return {
       reference: order.reference,
+      currency: order.currency,
       email: order.email,
       lineItems: order.lineItems.map((lineItem): OrderLineItem => lineItem),
       salesChannel: salesChannel,

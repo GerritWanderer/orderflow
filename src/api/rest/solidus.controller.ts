@@ -25,11 +25,17 @@ export class SolidusController {
   private buildOrder(order: OrderDto): Order {
     return {
       reference: order.number,
+      currency: order.currency,
       salesChannel: this.SALES_CHANNEL,
       email: order.email,
       lineItems: order.lines.map(
         (lineItem): OrderLineItem =>
-          new OrderLineItem(lineItem.sku, lineItem.quantity, false),
+          new OrderLineItem(
+            lineItem.sku,
+            lineItem.amount,
+            lineItem.quantity,
+            false,
+          ),
       ),
     };
   }

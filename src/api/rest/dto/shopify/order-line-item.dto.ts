@@ -1,6 +1,6 @@
 export class OrderLineItem {
-  public readonly quantity: number;
   public readonly sku: string;
+  public readonly amount: number;
+  public readonly quantity: number;
   public readonly isGiftCard: boolean;
-  constructor() {}
 }

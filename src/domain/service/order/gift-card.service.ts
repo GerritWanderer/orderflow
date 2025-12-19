@@ -8,7 +8,7 @@ import { Order } from 'src/domain/model/order.model';
 import { GiftCardRegisterDto } from 'src/infrastructure/dto/gift-card-register.dto';
 
 export interface GiftCardService {
-  register(LineItem: OrderLineItem): void;
+  register(order: Order, lineItem: OrderLineItem): void;
 }
 
 export const GIFT_CARD_SERVICE = 'GIFT_CARD_SERVICE';
@@ -21,7 +21,8 @@ export class GiftCardServiceImpl implements GiftCardService {
 
   register(order: Order, lineItem: OrderLineItem): void {
     const giftCardRegisterDto = this.giftCardRegisterDtoMapper(order, lineItem);
-    this.giftcardApi.register(giftCardRegisterDto);
+    const giftCard = this.giftcardApi.register(giftCardRegisterDto);
+    console.log(giftCard);
   }
 
   giftCardRegisterDtoMapper(

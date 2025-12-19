@@ -13,7 +13,7 @@ export class OrderService {
   ) {}
 
   call(order: Order): void {
-    this.giftcardService.register(order.lineItems[0]);
+    this.giftcardService.register(order, order.lineItems[0]);
     this.salesOrderService.export(order);
   }
 }

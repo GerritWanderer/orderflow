@@ -5,5 +5,5 @@ import { GiftCardModel } from '../model/gift-card.model';
 
 export interface GiftCardApiPort {
   getCredentials(currency: string): { user: string; password: string };
-  register(payload: GiftCardRegisterDto): Promise<GiftCardModel>;
+  register(payload: GiftCardRegisterDto): GiftCardModel;
 }
