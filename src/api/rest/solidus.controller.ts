@@ -4,8 +4,8 @@ import {
 } from 'src/domain/service/order/order.service';
 import { SolidusWebhookGuard } from './guards/solidus-webhook.guard';
 import { Body, Controller, Inject, Post, UseGuards } from '@nestjs/common';
-import { Order } from 'src/domain/models/order.model';
-import { OrderLineItem } from 'src/domain/models/order-line-item.model';
+import { Order } from 'src/domain/model/order.model';
+import { OrderLineItem } from 'src/domain/model/order-line-item.model';
 import { OrderDto } from './dto/solidus/order.dto';
 
 @Controller('solidus')

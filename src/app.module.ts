@@ -15,6 +15,8 @@ import {
 } from './domain/service/order/order.service';
 import { SolidusController } from './api/rest/solidus.controller';
 import { SolidusWebhookGuard } from './api/rest/guards/solidus-webhook.guard';
+import { GIFTCARD_API_PORT } from './domain/infrastructure/gift-card.api.port';
+import { GivexApiPort } from './infrastructure/gift-card/givex-api.port';
 
 @Module({
   imports: [],
@@ -25,6 +27,7 @@ import { SolidusWebhookGuard } from './api/rest/guards/solidus-webhook.guard';
     { provide: ORDER_SERVICE, useClass: OrderService },
     { provide: SALES_ORDER_SERVICE, useClass: SalesOrderServiceImpl },
     { provide: GIFT_CARD_SERVICE, useClass: GiftCardServiceImpl },
+    { provide: GIFTCARD_API_PORT, useClass: GivexApiPort },
   ],
 })
 export class AppModule {}

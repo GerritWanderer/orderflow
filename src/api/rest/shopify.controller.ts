@@ -1,8 +1,8 @@
 import { Body, Controller, Inject, Post, UseGuards } from '@nestjs/common';
 import { OrderDto } from './dto/shopify/order.dto';
-import { Order } from '../../domain/models/order.model';
+import { Order } from '../../domain/model/order.model';
 import { ShopifyWebhookGuard } from './guards/shopify-webhook.guard';
-import { OrderLineItem } from 'src/domain/models/order-line-item.model';
+import { OrderLineItem } from 'src/domain/model/order-line-item.model';
 import {
   ORDER_SERVICE,
   OrderService,

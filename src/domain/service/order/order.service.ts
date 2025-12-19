@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 import { GIFT_CARD_SERVICE, GiftCardService } from './gift-card.service';
 import { SALES_ORDER_SERVICE, SalesOrderService } from './sales-order.service';
-import { Order } from 'src/domain/models/order.model';
+import { Order } from 'src/domain/model/order.model';
 
 export const ORDER_SERVICE = 'ORDER_SERVICE';
 export class OrderService {

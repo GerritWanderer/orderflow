@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Order } from 'src/domain/models/order.model';
+import { Order } from 'src/domain/model/order.model';
 
 export interface SalesOrderService {
   export(order: Order): void;
