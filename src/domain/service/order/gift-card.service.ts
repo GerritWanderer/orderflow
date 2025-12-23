@@ -19,7 +19,8 @@ export class GiftCardServiceImpl implements GiftCardService {
   ) {}
 
   register(order: Order, lineItem: OrderLineItem): void {
-    const giftCard = this.giftcardApi.register(order, lineItem);
+    const credentials = this.giftcardApi.getCredentials(order.currency);
+    const giftCard = this.giftcardApi.register(order, lineItem, credentials);
     console.log(giftCard);
   }
 }

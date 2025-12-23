@@ -6,6 +6,10 @@ import { OrderLineItem } from 'src/domain/model/order-line-item.model';
 import { Credentials } from 'src/domain/value-object/credentials.value-object';
 
 export interface GiftCardApiPort {
-  getCredentials(currency: string): { user: string; password: string };
-  register(order: Order, lineItem: OrderLineItem): GiftCardModel;
+  getCredentials(currency: string): Credentials;
+  register(
+    order: Order,
+    lineItem: OrderLineItem,
+    credentials: Credentials,
+  ): GiftCardModel;
 }
