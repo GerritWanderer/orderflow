@@ -1,25 +1,26 @@
 import { Module } from '@nestjs/common';
-import { ShopifyController } from './api/rest/shopify.controller';
-import { ShopifyWebhookGuard } from './api/rest/guards/shopify-webhook.guard';
+import { ShopifyController } from 'src/api/rest/shopify.controller';
+import { ShopifyWebhookGuard } from 'src/api/rest/guards/shopify-webhook.guard';
 import {
   SALES_ORDER_SERVICE,
   SalesOrderServiceImpl,
-} from './domain/service/order/sales-order.service';
+} from 'src/domain/service/order/sales-order.service';
 import {
   GIFT_CARD_SERVICE,
   GiftCardServiceImpl,
-} from './domain/service/order/gift-card.service';
+} from 'src/domain/service/order/gift-card.service';
 import {
   ORDER_SERVICE,
   OrderService,
-} from './domain/service/order/order.service';
-import { SolidusController } from './api/rest/solidus.controller';
-import { SolidusWebhookGuard } from './api/rest/guards/solidus-webhook.guard';
-import { GIFTCARD_API_PORT } from './domain/infrastructure/gift-card.api.port';
-import { GivexApiPort } from './infrastructure/gift-card/givex-api.port';
+} from 'src/domain/service/order/order.service';
+import { SolidusController } from 'src/api/rest/solidus.controller';
+import { SolidusWebhookGuard } from 'src/api/rest/guards/solidus-webhook.guard';
+import { GIFTCARD_API_PORT } from 'src/domain/infrastructure/gift-card.api.port';
+import { GivexApiPort } from 'src/infrastructure/gift-card/givex-api.port';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [],
+  imports: [ConfigModule.forRoot({ isGlobal: true })],
   controllers: [ShopifyController, SolidusController],
   providers: [
     ShopifyWebhookGuard,
