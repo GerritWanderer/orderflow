@@ -5,10 +5,15 @@ import { OrderLineItem } from 'src/domain/model/order-line-item.model';
 import { Credentials } from 'src/domain/value-object/credentials.value-object';
 import { ConfigService } from '@nestjs/config';
 import { Injectable } from '@nestjs/common';
+import { HttpService } from '@nestjs/axios';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class GivexApiPort implements GiftCardApiPort {
-  constructor(private configService: ConfigService) {}
+  constructor(
+    private configService: ConfigService,
+    private readonly httpService: HttpService,
+  ) {}
 
   getCredentials(currency: string): Credentials {
     return new Credentials(
@@ -16,19 +21,31 @@ export class GivexApiPort implements GiftCardApiPort {
       `${this.configService.get<string>(`GIVEX_${currency}_PASSWORD`)}`,
     );
   }
-  register(
+  async register(
     order: Order,
     lineItem: OrderLineItem,
     credentials: Credentials,
   ): Promise<GiftCardModel> {
-    return Promise.resolve(
-      new GiftCardModel(
-        123123,
-        1234,
-        lineItem.amount,
-        order.reference,
-        credentials.username,
+    const response = await firstValueFrom(
+      this.httpService.post(
+        'https://giftcard.beeceptor.com/register',
+        {
+          reference: order.reference,
+          amount: lineItem.amount,
+        },
+        {
+          headers: {
+            token: `${credentials.username}`,
+          },
+        },
       ),
+    );
+    return new GiftCardModel(
+      response.data?.number,
+      response.data?.pin,
+      lineItem.amount,
+      order.reference,
+      order.currency,
     );
   }
 }

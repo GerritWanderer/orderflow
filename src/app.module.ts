@@ -18,9 +18,13 @@ import { SolidusWebhookGuard } from 'src/api/rest/guards/solidus-webhook.guard';
 import { GIFTCARD_API_PORT } from 'src/domain/infrastructure/gift-card.api.port';
 import { GivexApiPort } from 'src/infrastructure/gift-card/givex-api.port';
 import { ConfigModule } from '@nestjs/config';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true })],
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    HttpModule.register({ timeout: 5000, maxRedirects: 5 }),
+  ],
   controllers: [ShopifyController, SolidusController],
   providers: [
     ShopifyWebhookGuard,
