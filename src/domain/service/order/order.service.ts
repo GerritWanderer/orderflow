@@ -12,8 +12,8 @@ export class OrderService {
     private readonly salesOrderService: SalesOrderService,
   ) {}
 
-  call(order: Order): void {
-    this.giftcardService.register(order, order.lineItems[0]);
+  async call(order: Order): Promise<void> {
+    await this.giftcardService.register(order, order.lineItems[0]);
     this.salesOrderService.export(order);
   }
 }

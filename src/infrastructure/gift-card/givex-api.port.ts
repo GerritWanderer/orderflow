@@ -20,13 +20,15 @@ export class GivexApiPort implements GiftCardApiPort {
     order: Order,
     lineItem: OrderLineItem,
     credentials: Credentials,
-  ): GiftCardModel {
-    return new GiftCardModel(
-      123123,
-      1234,
-      lineItem.amount,
-      order.reference,
-      credentials.username,
+  ): Promise<GiftCardModel> {
+    return Promise.resolve(
+      new GiftCardModel(
+        123123,
+        1234,
+        lineItem.amount,
+        order.reference,
+        credentials.username,
+      ),
     );
   }
 }

@@ -11,5 +11,5 @@ export interface GiftCardApiPort {
     order: Order,
     lineItem: OrderLineItem,
     credentials: Credentials,
-  ): GiftCardModel;
+  ): Promise<GiftCardModel>;
 }

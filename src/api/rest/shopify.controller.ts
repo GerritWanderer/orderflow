@@ -31,7 +31,9 @@ export class ShopifyController {
         Order,
         Object.assign(shopifyOrder, { salesChannel }),
       );
-      this.orderService.call(order);
+      this.processOrder(order).catch((error) => {
+        console.log(`${error}`);
+      });
     }
   }
 
@@ -41,5 +43,8 @@ export class ShopifyController {
       (attr) => attr.name == 'sales_channel',
     )?.value;
     return value ?? null;
+  }
+  private async processOrder(order: Order) {
+    return await this.orderService.call(order);
   }
 }
