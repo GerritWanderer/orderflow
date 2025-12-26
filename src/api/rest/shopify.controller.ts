@@ -1,12 +1,19 @@
-import { Body, Controller, Inject, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Inject,
+  Post,
+  UseGuards,
+  ValidationPipe,
+} from '@nestjs/common';
 import { OrderDto } from './dto/shopify/order.dto';
 import { Order } from 'src/domain/model/order.model';
 import { ShopifyWebhookGuard } from './guards/shopify-webhook.guard';
-import { OrderLineItem } from 'src/domain/model/order-line-item.model';
 import {
   ORDER_SERVICE,
   OrderService,
 } from 'src/domain/service/order/order.service';
+import { plainToInstance } from 'class-transformer';
 
 @Controller('shopify')
 @UseGuards(ShopifyWebhookGuard)
@@ -17,10 +24,13 @@ export class ShopifyController {
   ) {}
 
   @Post()
-  shopify(@Body() shopifyOrder: OrderDto): void {
+  shopify(@Body(new ValidationPipe()) shopifyOrder: OrderDto): void {
     const salesChannel = this.getSalesChannel(shopifyOrder);
     if (salesChannel) {
-      const order: Order = this.buildOrder(shopifyOrder, salesChannel);
+      const order = plainToInstance(
+        Order,
+        Object.assign(shopifyOrder, { salesChannel }),
+      );
       this.orderService.call(order);
     }
   }
@@ -31,15 +41,5 @@ export class ShopifyController {
       (attr) => attr.name == 'sales_channel',
     )?.value;
     return value ?? null;
-  }
-
-  private buildOrder(order: OrderDto, salesChannel: string): Order {
-    return {
-      reference: order.reference,
-      currency: order.currency,
-      email: order.email,
-      lineItems: order.lineItems.map((lineItem): OrderLineItem => lineItem),
-      salesChannel: salesChannel,
-    };
   }
 }
